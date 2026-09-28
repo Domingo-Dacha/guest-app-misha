@@ -74,32 +74,33 @@ Remove-Item Env:RESET_DEMO_DATA
 ## Публикация
 
 Конкурсные репозитории приватные и принадлежат GitHub-организации. Бесплатный
-Vercel Hobby не умеет автоматически публиковать такие репозитории, поэтому на
-конкурсе используем Vercel CLI. GitHub Actions по-прежнему проверяет каждый
-push, но публикацию запускаем отдельно после зелёной проверки.
+Vercel Hobby не подключает такие репозитории через обычную Git-интеграцию.
+Поэтому публикацию выполняет GitHub Actions с отдельным токеном команды:
 
-В первый раз свяжи локальную копию с уже созданным проектом команды и явно
-задай Next.js preset:
+- каждый push в `main` сначала проходит полный workflow `Verify`;
+- после зелёного `Verify` workflow `Deploy production` автоматически обновляет
+  постоянную ссылку этой команды;
+- красная проверка ничего не публикует;
+- параллельные публикации не прерывают друг друга.
 
-```powershell
-npx vercel link --yes --project guest-app-<team> --scope domingo-dacha
-npx vercel project update guest-app-<team> --framework nextjs --yes --scope domingo-dacha
-```
-
-`<team>` — `nina`, `misha` или `valeria`. После изменений обнови постоянную
-ссылку одной командой из корня репозитория:
+Повторный деплой текущего `main` можно запустить вручную на вкладке
+**Actions → Deploy production → Run workflow**. Через Codex или GitHub CLI это
+те же две команды:
 
 ```powershell
-npx vercel deploy --prod --yes --scope domingo-dacha
+gh workflow run deploy-production.yml --ref main
+gh run watch
 ```
 
-Переменные из `.env.example` уже настроены в Vercel Production. У каждой
+Локальная авторизация в Vercel лидерам для этого не нужна. В каждом репозитории
+настроены Actions secret `VERCEL_TOKEN` и variables `VERCEL_ORG_ID`,
+`VERCEL_PROJECT_ID`. Токены нельзя выводить в логи, копировать в `.env` или
+передавать между командами; после стратсессии их нужно отозвать в Vercel.
+
+Переменные приложения из `.env.example` уже настроены в Vercel Production. У каждой
 команды отдельная Neon-база, свой `TEAM_SLUG`, PIN и серверные секреты;
 `DEMO_WRITES_ENABLED=true` включён только для production. Если команда создаёт
 Preview вручную, запись там нужно оставить выключенной.
-
-Автодеплой из `main` можно включить позже после перехода Vercel-команды на Pro
-или изменения модели владения репозиториями.
 
 PIN не хранится открытым текстом. `APP_PIN_HASH` и `APP_PIN_SALT` создаются
 через `npm run secrets:generate`; сессия подписывается `SESSION_SECRET` и живёт
