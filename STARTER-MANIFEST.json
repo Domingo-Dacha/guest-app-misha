@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "starterVersion": "2026.09.28-1",
+  "baselineTag": "competition-starter-v1",
+  "runtime": {
+    "node": "24.x",
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "typescript": "6.0.3"
+  },
+  "checksums": {
+    "fixtureSha256": "268a65c84cc4cb9caf1177f6b61c8f5d84049061ccb5d48132f703406ae424af",
+    "packageLockSha256": "7b984fa928b137b37862607b50fc2bd6f649f4584e7feee08f90c32235658559"
+  }
+}

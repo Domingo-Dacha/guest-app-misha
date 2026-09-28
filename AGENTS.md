@@ -1,0 +1,54 @@
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
+
+# Domingo Guest Lab
+
+This repository is a universal mobile-web starter for a short product
+competition. Do not hard-code a product scenario before a team chooses one.
+
+## Stack and commands
+
+- Use Node.js 24, Next.js 16 App Router, React 19 and strict TypeScript.
+- Before changing a Next.js API or convention, read the relevant local guide in
+  `node_modules/next/dist/docs/` as required above.
+- Keep `npm run verify` green. For user-facing changes also run
+  `npm run test:e2e` at 390 px/mobile WebKit and desktop Chromium.
+- Use existing components and tokens from `src/components` and
+  `src/app/globals.css` before creating one-off styles.
+
+## Data boundary
+
+- Screens read catalog data only through interfaces in `src/data/contracts` and
+  implementations in `src/data/repositories`.
+- Fixture content belongs in `src/data/fixtures`. Never add real guest personal
+  data, addresses, door/access codes or provider responses.
+- Any new persistent business entity requires a typed PostgreSQL table,
+  migration, tenant/team scope, repository, constraints and tests. Do not use
+  JSON files, browser storage or in-memory state as the source of truth.
+- Preserve `team_slug` isolation in every read, write and reset operation.
+
+## Competition limits
+
+- Do not connect production databases, payments, Telegram, Bnovo, Bitrix or
+  real outbound messaging.
+- The PIN is a lightweight gate for the private demo, not guest authentication.
+  Keep server-side session validation and rate limiting intact.
+- Preview deployments are read-only unless an owner explicitly enables demo
+  writes. Production team deployments use separate databases and secrets.
+- Keep loading, error and empty states, keyboard access and 390 px layout
+  working. Never hide authorization only in the UI.
+- Never commit `.env*`, credentials, database dumps, personal data or live API
+  output.
+
+## Delivery
+
+- Make focused changes through pull requests. Do not bypass a red check.
+- In the handoff, report the exact SHA, changed files, commands actually run,
+  database/integration impact and known limitations.

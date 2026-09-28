@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="420 420 460 460" role="img" aria-labelledby="title">
+  <title id="title">Domingo OS</title>
+  <g fill="none" stroke="#015548" stroke-width="18" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M526 641V459H644C750 459 835 541 835 641C835 742 754 824 648 824H448V671L688 543V738"/>
+    <path d="M491 641V553H526"/>
+  </g>
+</svg>
