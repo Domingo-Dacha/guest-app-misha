@@ -3,6 +3,8 @@ import { DomingoLogo } from "@/components/domingo/logo";
 import { hasValidSession } from "@/lib/auth/server-session";
 import { AccessForm } from "./access-form";
 
+export const dynamic = "force-dynamic";
+
 export default async function AccessPage() {
   if (await hasValidSession()) redirect("/");
   return (

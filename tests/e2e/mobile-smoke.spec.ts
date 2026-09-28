@@ -29,3 +29,21 @@ test("the access form explains invalid configuration without leaking details", a
     page.getByText("Доступ пока не настроен", { exact: true }),
   ).toBeVisible();
 });
+
+test("a forged session cookie cannot bypass the server-side gate", async ({
+  context,
+  page,
+}) => {
+  await context.addCookies([
+    {
+      name: "domingo_guest_session",
+      value: "fake.fake",
+      url: "http://localhost:3000",
+    },
+  ]);
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/access$/);
+  await expect(
+    page.getByRole("heading", { name: "Введите PIN команды" }),
+  ).toBeVisible();
+});

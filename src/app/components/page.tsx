@@ -5,6 +5,8 @@ import { Card } from "@/components/ui/card";
 import { requirePageSession } from "@/lib/auth/server-session";
 import { DialogDemo } from "./dialog-demo";
 
+export const dynamic = "force-dynamic";
+
 export default async function ComponentsPage() {
   await requirePageSession();
   return (

@@ -4,6 +4,8 @@ import { RequestDemo } from "@/components/domingo/request-demo";
 import { fixtureCatalogRepository } from "@/data/repositories/fixture-catalog-repository";
 import { requirePageSession } from "@/lib/auth/server-session";
 
+export const dynamic = "force-dynamic";
+
 function money(kopecks: number) {
   return new Intl.NumberFormat("ru-RU", {
     style: "currency",
