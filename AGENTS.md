@@ -52,7 +52,9 @@ competition. Do not hard-code a product scenario before a team chooses one.
 - Make focused changes through pull requests. Do not bypass a red check.
 - Production deploys only the verified `main` revision through
   `.github/workflows/deploy-production.yml`. Never print, copy or commit the
-  repository's `VERCEL_TOKEN`; use the configured Actions secret and variables.
+  repository's `VERCEL_TEAM_TOKEN`; use the configured Actions secret and
+  variables. The token is limited to the test-only Vercel team and must be
+  revoked after the competition.
 - A manual redeploy must target `main` and pass the workflow's local verification
   before publishing. Do not deploy a feature branch to the writable team app.
 - In the handoff, report the exact SHA, changed files, commands actually run,

@@ -44,21 +44,21 @@ jobs:
 
       - name: Pull Vercel production configuration
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TEAM_TOKEN }}
         run: >-
           npx --yes vercel@60.1.3 pull --yes --environment=production
           --scope=domingo-dacha --token="$VERCEL_TOKEN"
 
       - name: Build production artifact
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TEAM_TOKEN }}
         run: >-
           npx --yes vercel@60.1.3 build --prod
           --scope=domingo-dacha --token="$VERCEL_TOKEN"
 
       - name: Publish production artifact
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TEAM_TOKEN }}
         run: |
           deployment_url="$(npx --yes vercel@60.1.3 deploy --prebuilt --prod --scope=domingo-dacha --token="$VERCEL_TOKEN")"
           echo "Deployment: $deployment_url" >> "$GITHUB_STEP_SUMMARY"

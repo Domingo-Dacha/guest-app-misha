@@ -93,9 +93,14 @@ gh run watch
 ```
 
 Локальная авторизация в Vercel лидерам для этого не нужна. В каждом репозитории
-настроены Actions secret `VERCEL_TOKEN` и variables `VERCEL_ORG_ID`,
+настроены Actions secret `VERCEL_TEAM_TOKEN` и variables `VERCEL_ORG_ID`,
 `VERCEL_PROJECT_ID`. Токены нельзя выводить в логи, копировать в `.env` или
 передавать между командами; после стратсессии их нужно отозвать в Vercel.
+
+Vercel CLI требует токен scope `DomingoDacha → All Projects`: project-scoped
+token не может загрузить CLI-профиль и завершается ошибкой `User not found`.
+Поэтому Vercel-команда остаётся строго тестовой, а каждый токен хранится только
+в одном доверенном репозитории и ограничен сроком конкурса.
 
 Переменные приложения из `.env.example` уже настроены в Vercel Production. У каждой
 команды отдельная Neon-база, свой `TEAM_SLUG`, PIN и серверные секреты;
