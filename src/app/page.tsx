@@ -35,6 +35,7 @@ export default async function Home() {
           Здесь нет заранее выбранного продукта. Используйте компоненты,
           тестовые данные и серверные заявки, чтобы быстро проверить свою идею.
         </p>
+        <span className="status-badge">Команда Миши готова</span>
       </section>
       <section className="section" aria-labelledby="houses-title">
         <div className="section-heading">
