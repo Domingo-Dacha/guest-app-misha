@@ -73,14 +73,33 @@ Remove-Item Env:RESET_DEMO_DATA
 
 ## Публикация
 
-1. Импортируй репозиторий в Vercel.
-2. Framework Preset: Next.js; Root Directory: корень репозитория.
-3. Добавь переменные из `.env.example` для Production и Preview.
-4. Для Production используй отдельную Neon-базу команды и
-   `DEMO_WRITES_ENABLED=true`.
-5. Для Preview безопаснее оставить `DEMO_WRITES_ENABLED=false`.
-6. Каждый push в `main` создаёт новую рабочую версию; pull request получает
-   отдельную preview-ссылку.
+Конкурсные репозитории приватные и принадлежат GitHub-организации. Бесплатный
+Vercel Hobby не умеет автоматически публиковать такие репозитории, поэтому на
+конкурсе используем Vercel CLI. GitHub Actions по-прежнему проверяет каждый
+push, но публикацию запускаем отдельно после зелёной проверки.
+
+В первый раз свяжи локальную копию с уже созданным проектом команды и явно
+задай Next.js preset:
+
+```powershell
+npx vercel link --yes --project guest-app-<team> --scope domingo-dacha
+npx vercel project update guest-app-<team> --framework nextjs --yes --scope domingo-dacha
+```
+
+`<team>` — `nina`, `misha` или `valeria`. После изменений обнови постоянную
+ссылку одной командой из корня репозитория:
+
+```powershell
+npx vercel deploy --prod --yes --scope domingo-dacha
+```
+
+Переменные из `.env.example` уже настроены в Vercel Production. У каждой
+команды отдельная Neon-база, свой `TEAM_SLUG`, PIN и серверные секреты;
+`DEMO_WRITES_ENABLED=true` включён только для production. Если команда создаёт
+Preview вручную, запись там нужно оставить выключенной.
+
+Автодеплой из `main` можно включить позже после перехода Vercel-команды на Pro
+или изменения модели владения репозиториями.
 
 PIN не хранится открытым текстом. `APP_PIN_HASH` и `APP_PIN_SALT` создаются
 через `npm run secrets:generate`; сессия подписывается `SESSION_SECRET` и живёт
