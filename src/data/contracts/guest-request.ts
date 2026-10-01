@@ -26,4 +26,5 @@ export type GuestRequest = z.infer<typeof guestRequestSchema>;
 export interface GuestRequestRepository {
   create(input: CreateGuestRequest): Promise<GuestRequest>;
   listRecent(limit: number): Promise<GuestRequest[]>;
+  getById(id: string): Promise<GuestRequest | null>;
 }
