@@ -2,6 +2,7 @@
 
 import { MessageCircle, Send, Ticket, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { TicketForm } from "@/components/domingo/ticket-form";
 import type { SupportCategory } from "@/data/contracts/support";
@@ -27,8 +28,8 @@ export function TicketDialog({
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setReady(true));
-    return () => window.cancelAnimationFrame(frame);
+    const timeout = window.setTimeout(() => setReady(true), 0);
+    return () => window.clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -77,36 +78,39 @@ export function TicketDialog({
         )}
       </button>
 
-      {open ? (
-        <div
-          className="ticket-dialog"
-          onMouseDown={() => setOpen(false)}
-          role="presentation"
-        >
-          <section
-            aria-labelledby="ticket-form-title"
-            aria-modal="true"
-            className="ticket-dialog__panel"
-            onMouseDown={(event) => event.stopPropagation()}
-            role="dialog"
-          >
-            <button
-              aria-label="Закрыть форму"
-              className="ticket-dialog__close"
-              onClick={() => setOpen(false)}
-              type="button"
+      {ready && open
+        ? createPortal(
+            <div
+              className="ticket-dialog"
+              onMouseDown={() => setOpen(false)}
+              role="presentation"
             >
-              <X aria-hidden size={22} />
-            </button>
-            <TicketForm
-              categories={categories}
-              defaultCategory={defaultCategory}
-              descriptionHint={descriptionHint}
-              contextLabel={contextLabel}
-            />
-          </section>
-        </div>
-      ) : null}
+              <section
+                aria-labelledby="ticket-form-title"
+                aria-modal="true"
+                className="ticket-dialog__panel"
+                onMouseDown={(event) => event.stopPropagation()}
+                role="dialog"
+              >
+                <button
+                  aria-label="Закрыть форму"
+                  className="ticket-dialog__close"
+                  onClick={() => setOpen(false)}
+                  type="button"
+                >
+                  <X aria-hidden size={22} />
+                </button>
+                <TicketForm
+                  categories={categories}
+                  defaultCategory={defaultCategory}
+                  descriptionHint={descriptionHint}
+                  contextLabel={contextLabel}
+                />
+              </section>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
