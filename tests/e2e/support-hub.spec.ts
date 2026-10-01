@@ -12,6 +12,26 @@ test.beforeEach(async ({ context }) => {
   ]);
 });
 
+test("mobile dock opens the ticket form above the navigation", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile-webkit");
+
+  await page.goto("/");
+  const dock = page.locator(".mobile-dock");
+  const trigger = dock.getByRole("button", { name: "Создать обращение" });
+
+  await expect(trigger).toBeEnabled();
+  await trigger.click();
+
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(page.locator("body > .ticket-dialog")).toBeVisible();
+  await expect(
+    dialog.getByRole("heading", { name: "Создать обращение" }),
+  ).toBeVisible();
+});
+
 test("support hub works from search to a contextual ticket", async ({
   page,
 }, testInfo) => {
