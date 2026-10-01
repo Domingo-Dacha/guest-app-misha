@@ -65,6 +65,20 @@ export class PostgresGuestRequestRepository implements GuestRequestRepository {
       .limit(Math.min(Math.max(limit, 1), 50));
     return rows.map(toGuestRequest);
   }
+
+  async getById(id: string): Promise<GuestRequest | null> {
+    const [row] = await getDatabase()
+      .select()
+      .from(guestRequests)
+      .where(
+        and(
+          eq(guestRequests.teamSlug, getTeamSlug()),
+          eq(guestRequests.id, id),
+        ),
+      )
+      .limit(1);
+    return row ? toGuestRequest(row) : null;
+  }
 }
 
 export const guestRequestRepository = new PostgresGuestRequestRepository();

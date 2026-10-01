@@ -10,7 +10,7 @@ export function DomingoLogo() {
         height={44}
         priority
       />
-      <span>guest lab</span>
+      <span>guest care</span>
     </span>
   );
 }

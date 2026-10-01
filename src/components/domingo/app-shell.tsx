@@ -11,12 +11,12 @@ export function AppShell({ children }: { children: ReactNode }) {
           <DomingoLogo />
         </Link>
         <nav aria-label="Основная навигация">
-          <Link href="/">Демо</Link>
-          <Link href="/components">Компоненты</Link>
+          <Link href="/">Помощь</Link>
+          <Link href="/tickets">Мои обращения</Link>
         </nav>
       </header>
       <main>{children}</main>
-      <footer>Тестовое окружение · без реальных данных гостей</footer>
+      <footer>Domingo Дача · служба заботы · тестовое окружение</footer>
     </div>
   );
 }

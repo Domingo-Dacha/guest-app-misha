@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Domingo Guest Lab",
-  description: "Универсальный шаблон гостевого мобильного приложения Domingo",
+  title: "Помощь гостю · Domingo Дача",
+  description: "Инструкции по дому и обращения в службу заботы Domingo Дача",
   robots: { index: false, follow: false },
   applicationName: "Domingo Guest Lab",
 };
