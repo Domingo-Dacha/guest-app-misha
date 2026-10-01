@@ -54,7 +54,7 @@ export const supportContactSchema = z.object({
   id: slugSchema,
   label: z.string().min(1).max(48),
   description: z.string().min(1).max(100),
-  kind: z.enum(["phone", "telegram", "whatsapp"]),
+  kind: z.enum(["phone", "telegram", "whatsapp", "max", "email"]),
   href: z.string().startsWith("#"),
 });
 
@@ -73,6 +73,7 @@ export const supportTicketSchema = z.object({
   status: z.enum(supportTicketStatuses),
   eta: z.string().min(1).max(120),
   assignedTo: z.string().min(1).max(100).optional(),
+  assigneeImage: z.string().startsWith("/team/").optional(),
   updates: z
     .array(
       z.object({
@@ -88,7 +89,7 @@ export const supportTicketSchema = z.object({
 });
 
 export const supportFixtureSchema = z.object({
-  contacts: z.array(supportContactSchema).length(3),
+  contacts: z.array(supportContactSchema).length(5),
   categories: z.array(supportCategorySchema).min(5),
   instructions: z.array(supportInstructionSchema).min(8),
   tickets: z.array(supportTicketSchema).min(2),

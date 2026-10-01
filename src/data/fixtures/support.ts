@@ -23,6 +23,20 @@ export const supportFixture = supportFixtureSchema.parse({
       kind: "whatsapp",
       href: "#ticket-form",
     },
+    {
+      id: "max",
+      label: "MAX",
+      description: "Написать в мессенджер",
+      kind: "max",
+      href: "#ticket-form",
+    },
+    {
+      id: "email",
+      label: "Написать на email",
+      description: "Для несрочных вопросов",
+      kind: "email",
+      href: "#ticket-form",
+    },
   ],
   categories: [
     {
@@ -71,8 +85,8 @@ export const supportFixture = supportFixtureSchema.parse({
   instructions: [
     {
       slug: "how-to-arrive",
-      title: "Как добраться до дома",
-      shortTitle: "Как добраться",
+      title: "Как доехать до дома",
+      shortTitle: "Как доехать",
       summary:
         "Ориентиры на территории и путь от парковки без реального адреса.",
       categoryId: "safety",
@@ -81,8 +95,8 @@ export const supportFixture = supportFixtureSchema.parse({
       durationMinutes: 2,
       media: {
         kind: "video",
-        src: "/houses/terrace-house.jpg",
-        alt: "Демонстрационный загородный дом среди деревьев",
+        src: "/houses/how-to-arrive.webp",
+        alt: "Автомобиль у въезда в Domingo Дача",
         label: "Видео-маршрут · 0:48",
       },
       steps: [
@@ -112,8 +126,8 @@ export const supportFixture = supportFixtureSchema.parse({
       durationMinutes: 2,
       media: {
         kind: "video",
-        src: "/houses/pine-house.jpg",
-        alt: "Демонстрационный вход в загородный дом",
+        src: "/houses/open-keybox.webp",
+        alt: "Кейбокс с кодовым замком у входа в дом",
         label: "Видео · 0:36",
       },
       steps: [
@@ -143,8 +157,8 @@ export const supportFixture = supportFixtureSchema.parse({
       durationMinutes: 4,
       media: {
         kind: "video",
-        src: "/houses/river-house.jpg",
-        alt: "Демонстрационная зона отдыха рядом с водой",
+        src: "/houses/furako.webp",
+        alt: "Горячая фурако на лесной террасе",
         label: "Видео · 1:12",
       },
       steps: [
@@ -174,8 +188,8 @@ export const supportFixture = supportFixtureSchema.parse({
       durationMinutes: 3,
       media: {
         kind: "video",
-        src: "/houses/pine-house.jpg",
-        alt: "Гостиная демонстрационного дома с камином",
+        src: "/houses/fireplace.webp",
+        alt: "Растопленный камин в гостиной дома",
         label: "Видео · 0:54",
       },
       steps: [
@@ -373,7 +387,7 @@ export const supportFixture = supportFixtureSchema.parse({
           text: "Сообщите, есть ли запах гари, искры или необычный звук.",
         },
       ],
-      note: "При запахе гари выйдите из дома и сразу свяжитесь со службой заботы.",
+      note: "При запахе гари, дыма или угрозе безопасности сначала выйдите из дома, затем позвоните 112 и в службу заботы.",
     },
     {
       slug: "heating-control",
@@ -415,6 +429,7 @@ export const supportFixture = supportFixtureSchema.parse({
       status: "en_route",
       eta: "Специалист будет через 25–35 минут",
       assignedTo: "Специалист службы заботы",
+      assigneeImage: "/team/care-specialist.webp",
       updates: [
         {
           status: "accepted",
@@ -454,6 +469,7 @@ export const supportFixture = supportFixtureSchema.parse({
       status: "resolved",
       eta: "Решено удалённо за 12 минут",
       assignedTo: "Служба заботы",
+      assigneeImage: "/team/care-specialist.webp",
       updates: [
         {
           status: "accepted",

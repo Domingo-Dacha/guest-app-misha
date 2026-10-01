@@ -3,7 +3,9 @@ import Link from "next/link";
 import {
   ArrowRight,
   Clock3,
+  Mail,
   MessageCircle,
+  MessagesSquare,
   Phone,
   PlayCircle,
   Send,
@@ -12,7 +14,8 @@ import {
 
 import { AppShell } from "@/components/domingo/app-shell";
 import { SupportIcon } from "@/components/domingo/support-icon";
-import { TicketForm } from "@/components/domingo/ticket-form";
+import { SupportSearch } from "@/components/domingo/support-search";
+import { TicketDialog } from "@/components/domingo/ticket-dialog";
 import type { SupportContact } from "@/data/contracts/support";
 import { fixtureSupportRepository } from "@/data/repositories/fixture-support-repository";
 import { requirePageSession } from "@/lib/auth/server-session";
@@ -22,6 +25,8 @@ export const dynamic = "force-dynamic";
 function ContactIcon({ kind }: { kind: SupportContact["kind"] }) {
   if (kind === "phone") return <Phone aria-hidden size={22} />;
   if (kind === "telegram") return <Send aria-hidden size={22} />;
+  if (kind === "email") return <Mail aria-hidden size={22} />;
+  if (kind === "max") return <MessagesSquare aria-hidden size={22} />;
   return <MessageCircle aria-hidden size={22} />;
 }
 
@@ -49,13 +54,6 @@ export default async function Home() {
             <ArrowRight aria-hidden size={17} />
           </Link>
         </div>
-        <div className="care-pulse" aria-label="Служба заботы доступна">
-          <span className="care-pulse__dot" />
-          <div>
-            <strong>Мы на связи</strong>
-            <small>Среднее время ответа — 5 минут</small>
-          </div>
-        </div>
       </section>
 
       <section className="contact-section" aria-labelledby="contact-title">
@@ -81,10 +79,11 @@ export default async function Home() {
               <ArrowRight aria-hidden size={18} />
             </a>
           ))}
+          <TicketDialog categories={categories} triggerVariant="contact" />
         </div>
         <p className="contact-note">
           При запахе гари, дыма или угрозе безопасности сначала выйдите из дома,
-          затем звоните в службу заботы.
+          затем позвоните 112 и в службу заботы.
         </p>
       </section>
 
@@ -140,50 +139,7 @@ export default async function Home() {
             <h2 id="categories-title">Выберите категорию</h2>
           </div>
         </div>
-        <div className="category-grid">
-          {categories.map((category) => {
-            const categoryInstructions = instructions.filter(
-              (instruction) => instruction.categoryId === category.id,
-            );
-            return (
-              <article className="category-card" key={category.id}>
-                <div className="category-card__heading">
-                  <span className="support-icon support-icon--large">
-                    <SupportIcon name={category.icon} />
-                  </span>
-                  <div>
-                    <h3>{category.title}</h3>
-                    <p>{category.description}</p>
-                  </div>
-                </div>
-                {categoryInstructions.length > 0 ? (
-                  <ul>
-                    {categoryInstructions.map((instruction) => (
-                      <li key={instruction.slug}>
-                        <Link href={`/instructions/${instruction.slug}`}>
-                          {instruction.shortTitle}
-                          <ArrowRight aria-hidden size={16} />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="category-card__empty">
-                    Инструкции добавим на следующем шаге
-                  </p>
-                )}
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section
-        className="section ticket-form-section"
-        id="ticket-form"
-        aria-labelledby="ticket-form-title"
-      >
-        <TicketForm categories={categories} />
+        <SupportSearch categories={categories} instructions={instructions} />
       </section>
 
       <nav className="mobile-dock" aria-label="Быстрая навигация">
@@ -191,10 +147,7 @@ export default async function Home() {
           <MessageCircle aria-hidden size={20} />
           Помощь
         </Link>
-        <a href="#ticket-form">
-          <Send aria-hidden size={20} />
-          Написать
-        </a>
+        <TicketDialog categories={categories} triggerVariant="dock" />
         <Link href="/tickets">
           <Ticket aria-hidden size={20} />
           Обращения

@@ -25,6 +25,7 @@ describe("guest support fixture", () => {
     const serialized = JSON.stringify(supportFixture);
     expect(serialized).not.toMatch(/\+7\d{10}|https?:\/\/(?:t\.me|wa\.me)/i);
     expect(serialized).not.toMatch(/код.{0,10}\d{4}/i);
+    expect(supportFixture.contacts).toHaveLength(5);
     expect(
       supportFixture.contacts.every((contact) => contact.href.startsWith("#")),
     ).toBe(true);
