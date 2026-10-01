@@ -10,10 +10,24 @@ import type { SupportCategory } from "@/data/contracts/support";
 
 type FormState = "idle" | "loading" | "error";
 
-export function TicketForm({ categories }: { categories: SupportCategory[] }) {
+type TicketFormProps = {
+  categories: SupportCategory[];
+  defaultCategory?: string;
+  descriptionHint?: string;
+  contextLabel?: string;
+};
+
+export function TicketForm({
+  categories,
+  defaultCategory,
+  descriptionHint = "Например: проектор включается, но не показывает изображение",
+  contextLabel,
+}: TicketFormProps) {
   const router = useRouter();
   const [state, setState] = useState<FormState>("idle");
-  const [category, setCategory] = useState(categories[0]?.title ?? "Другое");
+  const [category, setCategory] = useState(
+    defaultCategory ?? categories[0]?.title ?? "Другое",
+  );
   const [message, setMessage] = useState("");
   const [urgent, setUrgent] = useState(false);
   const [error, setError] = useState("");
@@ -58,6 +72,9 @@ export function TicketForm({ categories }: { categories: SupportCategory[] }) {
         <div>
           <p className="eyebrow">Не получилось самостоятельно?</p>
           <h2 id="ticket-form-title">Создать обращение</h2>
+          {contextLabel ? (
+            <span className="ticket-form__context">{contextLabel}</span>
+          ) : null}
         </div>
         <span className="response-time">Ответим в течение 5 минут</span>
       </div>
@@ -82,7 +99,7 @@ export function TicketForm({ categories }: { categories: SupportCategory[] }) {
           <textarea
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder="Например: проектор включается, но не показывает изображение"
+            placeholder={descriptionHint}
             minLength={3}
             maxLength={1800}
             required

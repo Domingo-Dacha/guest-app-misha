@@ -3,18 +3,30 @@ import Link from "next/link";
 import {
   ArrowLeft,
   Clock3,
+  Mail,
   MessageCircle,
+  MessagesSquare,
   Phone,
   PlayCircle,
+  Send,
 } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import { AppShell } from "@/components/domingo/app-shell";
 import { SupportIcon } from "@/components/domingo/support-icon";
+import { TicketDialog } from "@/components/domingo/ticket-dialog";
+import type { SupportContact } from "@/data/contracts/support";
 import { fixtureSupportRepository } from "@/data/repositories/fixture-support-repository";
 import { requirePageSession } from "@/lib/auth/server-session";
 
 export const dynamic = "force-dynamic";
+
+function ContactIcon({ kind }: { kind: SupportContact["kind"] }) {
+  if (kind === "telegram") return <Send aria-hidden size={17} />;
+  if (kind === "email") return <Mail aria-hidden size={17} />;
+  if (kind === "max") return <MessagesSquare aria-hidden size={17} />;
+  return <MessageCircle aria-hidden size={17} />;
+}
 
 export default async function InstructionPage({
   params,
@@ -26,13 +38,25 @@ export default async function InstructionPage({
   const instruction = await fixtureSupportRepository.getInstruction(slug);
   if (!instruction) notFound();
 
-  const related = (await fixtureSupportRepository.listInstructions())
+  const [allInstructions, categories, contacts] = await Promise.all([
+    fixtureSupportRepository.listInstructions(),
+    fixtureSupportRepository.listCategories(),
+    fixtureSupportRepository.listContacts(),
+  ]);
+  const related = allInstructions
     .filter(
       (item) =>
         item.categoryId === instruction.categoryId &&
         item.slug !== instruction.slug,
     )
     .slice(0, 2);
+  const category = categories.find(
+    (item) => item.id === instruction.categoryId,
+  );
+  const phone = contacts.find((contact) => contact.kind === "phone");
+  const messageContacts = contacts.filter(
+    (contact) => contact.kind !== "phone",
+  );
 
   return (
     <AppShell>
@@ -103,12 +127,25 @@ export default async function InstructionPage({
               разберёмся удалённо или назначим специалиста.
             </p>
             <div className="support-aside__actions">
-              <Link className="button button--primary" href="/#ticket-form">
-                <MessageCircle aria-hidden size={18} /> Создать обращение
-              </Link>
-              <Link className="button button--secondary" href="/#ticket-form">
+              <TicketDialog
+                categories={categories}
+                contextLabel={`По инструкции «${instruction.shortTitle}»`}
+                defaultCategory={category?.title}
+                descriptionHint={`Например: выполнил шаги инструкции «${instruction.shortTitle}», но проблема осталась…`}
+              />
+              <a className="button button--secondary" href={phone?.href ?? "#"}>
                 <Phone aria-hidden size={18} /> Позвонить
-              </Link>
+              </a>
+            </div>
+            <div className="instruction-messengers">
+              <span>Или напишите</span>
+              <div>
+                {messageContacts.map((contact) => (
+                  <a href={contact.href} key={contact.id}>
+                    <ContactIcon kind={contact.kind} /> {contact.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </aside>
         </div>

@@ -46,6 +46,8 @@ export function guestRequestToSupportTicket(
           ? "Исполнитель уточняет время прибытия"
           : "Назначим исполнителя в ближайшее время",
     assignedTo: status === "accepted" ? undefined : "Специалист службы заботы",
+    assigneeImage:
+      status === "accepted" ? undefined : "/team/care-specialist.webp",
     updates: [
       {
         status: "accepted",

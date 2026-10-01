@@ -54,7 +54,7 @@ export default async function TicketsPage() {
           <h1>Мои обращения</h1>
           <p>Следите за статусом и временем прибытия специалиста.</p>
         </div>
-        <Link className="button button--primary" href="/#ticket-form">
+        <Link className="button button--primary" href="/#contact-title">
           <Plus aria-hidden size={18} /> Новое обращение
         </Link>
       </section>

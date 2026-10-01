@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -69,7 +70,18 @@ export default async function TicketPage({
               </span>
             </div>
             <div>
-              <UserRoundCheck aria-hidden size={20} />
+              {ticket.assigneeImage ? (
+                <Image
+                  className="ticket-assignee__photo"
+                  src={ticket.assigneeImage}
+                  alt="Фото назначенного специалиста"
+                  width={48}
+                  height={48}
+                  unoptimized
+                />
+              ) : (
+                <UserRoundCheck aria-hidden size={20} />
+              )}
               <span>
                 <small>Исполнитель</small>
                 <strong>{ticket.assignedTo ?? "Подбираем специалиста"}</strong>
@@ -104,10 +116,10 @@ export default async function TicketPage({
             <h2>Связаться по обращению</h2>
           </div>
           <div>
-            <Link className="button button--secondary" href="/#ticket-form">
+            <Link className="button button--secondary" href="/#contact-title">
               <MessageCircle aria-hidden size={18} /> Написать
             </Link>
-            <Link className="button button--primary" href="/#ticket-form">
+            <Link className="button button--primary" href="/#contact-title">
               <Phone aria-hidden size={18} /> Позвонить
             </Link>
           </div>
