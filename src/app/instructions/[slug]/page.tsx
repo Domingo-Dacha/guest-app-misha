@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   ArrowLeft,
   Clock3,
+  ExternalLink,
   Mail,
   MessageCircle,
   MessagesSquare,
@@ -111,6 +112,17 @@ export default async function InstructionPage({
                 </li>
               ))}
             </ol>
+            {instruction.guide ? (
+              <a
+                className="instruction-guide-link"
+                href={instruction.guide.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {instruction.guide.label}
+                <ExternalLink aria-hidden size={17} />
+              </a>
+            ) : null}
             {instruction.note ? (
               <div className="safety-note">
                 <strong>Важно</strong>

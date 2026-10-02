@@ -89,3 +89,20 @@ test("support hub works from search to a contextual ticket", async ({
     page.getByAltText("Фото назначенного специалиста"),
   ).toBeVisible();
 });
+
+test("furako and fireplace details show compact safety instructions", async ({
+  page,
+}) => {
+  await page.goto("/instructions/furako-start");
+  await expect(
+    page.getByRole("heading", { name: "Как пользоваться фурако" }),
+  ).toBeVisible();
+  await expect(page.locator(".instruction-steps li")).toHaveCount(3);
+  await expect(
+    page.getByRole("link", { name: "Открыть полную инструкцию по фурако" }),
+  ).toHaveAttribute("href", "https://domingodacha.ru/furakoinst");
+
+  await page.goto("/instructions/light-fireplace");
+  await expect(page.locator(".instruction-steps li")).toHaveCount(4);
+  await expect(page.getByText("Жидкий розжиг запрещён.")).toBeVisible();
+});

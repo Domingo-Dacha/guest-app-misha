@@ -1140,6 +1140,21 @@ input:disabled {
   color: var(--text-muted);
   line-height: 1.55;
 }
+.instruction-guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 20px 58px;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  padding: 11px 15px;
+  color: var(--brand);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+.instruction-guide-link:hover {
+  background: #cdebe5;
+}
 .safety-note {
   border-left: 4px solid var(--warning);
   border-radius: 14px;
@@ -1605,6 +1620,9 @@ input:disabled {
   .instruction-media {
     aspect-ratio: 4 / 3;
     border-radius: 22px;
+  }
+  .instruction-guide-link {
+    margin-left: 0;
   }
   .support-aside {
     position: static;

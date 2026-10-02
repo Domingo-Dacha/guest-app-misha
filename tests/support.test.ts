@@ -19,6 +19,14 @@ describe("guest support fixture", () => {
     await expect(
       fixtureSupportRepository.getDemoTicket("missing-ticket"),
     ).resolves.toBeNull();
+    await expect(
+      fixtureSupportRepository.getInstruction("furako-start"),
+    ).resolves.toMatchObject({
+      guide: { href: "https://domingodacha.ru/furakoinst" },
+      steps: expect.arrayContaining([
+        expect.objectContaining({ title: "Перемешивайте и проверяйте воду" }),
+      ]),
+    });
   });
 
   it("contains no live contacts, addresses or access codes", () => {
