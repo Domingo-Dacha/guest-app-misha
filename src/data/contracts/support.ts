@@ -31,6 +31,12 @@ export const supportInstructionSchema = z.object({
     alt: z.string().min(1).max(160),
     label: z.string().min(1).max(80),
   }),
+  guide: z
+    .object({
+      href: z.url().startsWith("https://domingodacha.ru/"),
+      label: z.string().min(1).max(80),
+    })
+    .optional(),
   steps: z
     .array(
       z.object({
